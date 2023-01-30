@@ -1,0 +1,7 @@
+list disk
+select disk X
+clean
+create partiton primary
+format fs=fat32 quick
+assign
+exit

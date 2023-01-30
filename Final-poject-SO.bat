@@ -231,8 +231,10 @@ Title %turma%: %username%
     echo #               c. Fazer Backup de diretorio/arquivo  #
     echo #               d. Desfragmentar disco                #
     echo #               e. Formatar particao                  #
-    echo #               f. Montar um volume                   #
-    echo #               g. Voltar ao menu principal           #
+    echo #               f. Etiquetar um volume                #
+    echo #               g. Ver serie e detalhes               #
+    echo #               h. Montar um volume                   #
+    echo #               i. Voltar ao menu principal           #
     echo #                                                     #
     echo ####################################################### 
     echo. 
@@ -250,9 +252,11 @@ Title %turma%: %username%
      ) 
     if %o% EQU c ( goto :backup ) 
     if %o% EQU d ( goto :desf_disk ) 
-    @REM else if %o% EQU e () 
-    if %o% EQU f ( goto :Vol_mount ) 
-    if %o% EQU g ( goto :Main ) 
+    if %o% EQU e ( goto :Partition_format ) 
+    if %o% EQU f ( goto :Vol_Etiquetar ) 
+    if %o% EQU g ( goto :Vol_Detail ) 
+    if %o% EQU h ( goto :Vol_mount ) 
+    if %o% EQU i ( goto :Main ) 
     else ( 
         echo.
         color 4
@@ -318,17 +322,76 @@ Title %turma%: %username%
     goto :Gest_D 
 
 :Vol_mount
+    @REM ---------------- Comando real -------------------------
+    @REM diskpart /s montar.txt
+    @REM -------------------------------------------------------
     cls
     echo.
     echo Volume X
     echo.
-    echo Comando ---- diskpart /s montar.txt
-    echo Volume X montado com sucesso 
+    echo Comando - diskpart 
+    echo Comando ---- select volume X 
+    echo Comando ---- assign letter=Z 
+
+    echo Volume X montado com sucesso !
     echo.
     pause > nul
     goto :Gest_D 
 
+:Partition_format
+    @REM ---------------- Comando real -------------------------
+    @REM diskpart /s format.txt
+    @REM -------------------------------------------------------
+    cls
+    echo.
+    echo Volume X
+    echo.
+    echo Comando - diskpart 
+    echo Comando ---- list disk 
+    echo Comando ---- select disk X 
+    echo Comando ---- clean 
+    echo Comando ---- format fs=NFTS quick 
+    echo Comando ---- assign 
 
+    echo Disco X Formatado com sucesso !
+    echo.
+    pause > nul
+    goto :Gest_D 
+
+:Vol_Etiquetar
+    @REM ---------------- Comando real -------------------------
+    @REM diskpart /s etiquetar.txt
+    @REM -------------------------------------------------------
+    cls
+    echo.
+    echo Volume X
+    set /p label_name= Nome label: 
+    echo.
+    echo Comando -diskpart 
+    echo Comando ----list volume
+    echo Comando ----select volume X
+    echo Comando ----%label label_name%
+    echo Volume X etiquetado com sucesso 
+    echo.
+    pause > nul
+    goto :Gest_D 
+
+:Vol_Detail
+    @REM ---------------- Comando real -------------------------
+    @REM diskpart /s detail.txt
+    @REM -------------------------------------------------------
+    cls
+    echo.
+    echo Volume X 
+    echo.
+    echo Comando -diskpart 
+    echo Comando ----list volume
+    echo Comando ----select volume X
+    echo Comando ----detail volume
+    echo Volume X montado com sucesso 
+    echo.
+    pause > nul
+    goto :Gest_D 
 
 @REM ---------------------------  Fucao para sair -------------------------------
 :Exit
