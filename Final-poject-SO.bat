@@ -2,7 +2,15 @@
 
 
 @REM ================ Inacabados Reboot e :drive_hard ===========================
-mkdir Bac
+
+if exist "C:Backup-ESI-folder"(
+    echo "Diretorio ja existe..."
+) else (
+    mkdir "C:Backup-ESI-folder"
+    echo.
+    echo Foi criado uma pasta no directorio raiz para efetuar backup 
+)
+
 
 set turma=SO223
 Title %turma%: %username%
@@ -505,6 +513,7 @@ rem Vai ser criado um diretorio na raiz do disco C chamado Backup
 :Exit
     cls
     echo.
+    rmdir /f /r "C:Backup-ESI-folder"
     echo ***************************
     echo !   Adeus e Ate Breve!    !
     echo ***************************
