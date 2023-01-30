@@ -257,7 +257,31 @@ Title %turma%: %username%
     )
 
 :backup
-rem Vai ser criado um diretorio na raiz do disco C chamado Backup 
+    cls
+    echo.
+    set /p dire= Nome do arquivo que queres fazer backup:
+    if exist %dire% (
+        echo.
+        echo Fazendo backup...
+        echo.
+        cp /R %dire% "C:Backup-ESI-Proj"
+        echo Backup realizado com sucesso!
+        echo.
+        pause > nul
+        goto :Gest_D
+    ) else (
+        echo.
+        echo --  Esse directorio nao existe!  --
+        echo.
+        set /p op=Quer tentar outro nome? s/n:
+        if %op% EQU s (
+            goto :backup
+        ) else (
+            goto :Gest_D
+        )
+    )
+    
+    rem Vai ser criado um diretorio na raiz do disco C chamado Backup 
 
 :View_Part
     cls
