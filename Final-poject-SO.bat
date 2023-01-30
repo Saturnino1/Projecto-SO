@@ -2,11 +2,13 @@
 
 
 @REM ================ Inacabados Reboot e :drive_hard ===========================
-if exist "C:Backup-ESI-Proj" (
+if exist Backup-ESI-Proj (
     echo Ja tens uma pasta de Backup pronta
 ) else (
-    mkdir "C:Backup-ESI-Proj"
+    mkdir Backup-ESI-Proj
+    echo "Local de backup criado."
 )
+pause
 
 
 set turma=SO223
@@ -228,8 +230,8 @@ Title %turma%: %username%
     echo #               b. Fazer checkdisk                    #
     echo #               c. Fazer Backup de diretorio/arquivo  #
     echo #               d. Desfragmentar disco                #
-    echo #               e. Formatar unidade                   #
-    echo #               f. Volume                             #
+    echo #               e. Formatar particao                  #
+    echo #               f. Montar um volume                   #
     echo #               g. Voltar ao menu principal           #
     echo #                                                     #
     echo ####################################################### 
@@ -237,15 +239,19 @@ Title %turma%: %username%
     set /p o=%turma%-TP1# 
     if %o% EQU a ( goto :View_Part ) 
     if %o% EQU b ( 
+        cls
+        echo Realizando checkdisk....
         chkdsk C: /f /r
         echo.
+        echo checkdisk terminado
+        echo.
         pause > nul
-        goto :Tasks
+        goto :Gest_D
      ) 
-    else if %o% EQU c ( goto :backup) 
+    if %o% EQU c ( goto :backup ) 
     if %o% EQU d ( goto :desf_disk ) 
     @REM else if %o% EQU e () 
-    @REM else if %o% EQU f () 
+    if %o% EQU f ( goto :Vol_mount ) 
     if %o% EQU g ( goto :Main ) 
     else ( 
         echo.
@@ -259,12 +265,12 @@ Title %turma%: %username%
 :backup
     cls
     echo.
-    set /p dire= Nome do arquivo que queres fazer backup:
+    set /p dire= Nome da pasta que queres fazer backup:
     if exist %dire% (
         echo.
         echo Fazendo backup...
         echo.
-        cp /R %dire% "C:Backup-ESI-Proj"
+        xcopy %dire% Backup-ESI-Proj
         echo Backup realizado com sucesso!
         echo.
         pause > nul
@@ -310,6 +316,18 @@ Title %turma%: %username%
     echo.
     pause > nul
     goto :Gest_D 
+
+:Vol_mount
+    cls
+    echo.
+    echo Volume X
+    echo.
+    echo Comando ---- diskpart /s montar.txt
+    echo Volume X montado com sucesso 
+    echo.
+    pause > nul
+    goto :Gest_D 
+
 
 
 @REM ---------------------------  Fucao para sair -------------------------------
