@@ -2,6 +2,11 @@
 
 
 @REM ================ Inacabados Reboot e :drive_hard ===========================
+if exist "C:Backup-ESI-Proj" (
+    echo Ja tens uma pasta de Backup pronta
+) else (
+    mkdir "C:Backup-ESI-Proj"
+)
 
 
 set turma=SO223
