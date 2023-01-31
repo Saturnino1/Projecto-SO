@@ -397,6 +397,11 @@ Title %turma%: %username%
 :Exit
     cls
     echo.
+    set /p save= Quer eliminar a pasta de BackUp? s/n :
+    if %save% EQU s (
+        rm /F /R "Backup-ESI-Proj"
+    ) 
+    echo.
     echo ***************************
     echo !   Adeus e Ate Breve!    !
     echo ***************************
